@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package grpc2;
+
+// Servicio gRPC #2: responde confirmando conexion.
+service SecondGrpcService {
+  rpc CheckConnection (ConnectionRequest) returns (ConnectionReply);
+}
+
+// Mensaje de entrada compartido: string + number.
+message ConnectionRequest {
+  string stringMessage = 1;
+  int32 numericMessage = 2;
+}
+
+// Mensaje de salida simple.
+message ConnectionReply {
+  string response = 1;
+}
