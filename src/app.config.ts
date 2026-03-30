@@ -39,10 +39,11 @@ export type LoadedGrpcPackage = {
 export function loadGrpcPackage(protoFileName: string, packageName: string): LoadedGrpcPackage {
   const protoPath = join(__dirname, 'proto', protoFileName);
 
+  // Cargamos el archivo .proto e interpretamos la definición del servicio.
   const packageDefinition = protoLoader.loadSync(protoPath, {
-    defaults: true,
-    oneofs: true,
-    keepCase: false,
+    defaults: true, // Agrega valores por defecto para campos opcionales.
+    oneofs: true, // Incluye campos oneof correctamente.
+    keepCase: false, // Convierte los nombres a camelCase en el resultado.
   });
 
   const grpcObject = grpc.loadPackageDefinition(packageDefinition) as Record<string, unknown>;

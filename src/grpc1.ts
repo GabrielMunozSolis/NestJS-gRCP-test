@@ -20,12 +20,15 @@ const grpc1Package = grpcObject.grpc1;
 const FirstGrpcService = grpc1Package.FirstGrpcService;
 
 const server = new grpc.Server();
+
+// Registramos el servicio y la implementación del método checkConnection.
 server.addService(FirstGrpcService.service, {
   checkConnection: (
     call: grpc.ServerUnaryCall<ConnectionRequest, ConnectionReply>,
     callback: grpc.sendUnaryData<ConnectionReply>,
   ) => {
     // Implementación del método CheckConnection de grpc1.
+    // Se lee la petición recibida y se responde con un mensaje simple.
     const { stringMessage, numericMessage } = call.request;
     callback(null, {
       response: `Conexión OK con gRPC1: ${stringMessage} - ${numericMessage}`,
@@ -39,5 +42,8 @@ server.bindAsync(address, grpc.ServerCredentials.createInsecure(), (error, port)
     console.error('Error levantando gRPC1:', error.message);
     process.exit(1);
   }
+
+  // El servidor comienza a aceptar conexiones solo después de bindAsync.
+  server.start();
   console.log(`gRPC1 escuchando en localhost:${port}`);
 });

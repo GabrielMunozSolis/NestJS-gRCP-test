@@ -8,11 +8,13 @@ import { ConnectionRequest } from './app.config';
  */
 @Controller()
 export class AppController {
+  // Nest inyecta BridgeService para que el controlador pueda delegar la lógica de negocio.
   constructor(private readonly bridgeService: BridgeService) {}
 
   /**
    * Ruta POST /test-grpc
    * Recibe el payload JSON del cliente y delega la llamada a BridgeService.
+   * El body debe cumplir con el tipo ConnectionRequest definido en app.config.ts.
    */
   @Post('test-grpc')
   async testConnection(@Body() body: ConnectionRequest) {

@@ -12,9 +12,11 @@ export class BridgeService implements OnModuleDestroy {
   private readonly grpc2Client: GrpcClientWithCheck;
 
   constructor() {
+    // Cargamos la definición de los servicios gRPC desde los archivos .proto.
     const grpc1Package = loadGrpcPackage('grpc1.proto', 'grpc1');
     const grpc2Package = loadGrpcPackage('grpc2.proto', 'grpc2');
 
+    // Obtenemos el constructor del cliente gRPC para cada servicio.
     const FirstGrpcService = grpc1Package.FirstGrpcService;
     const SecondGrpcService = grpc2Package.SecondGrpcService;
 
@@ -33,6 +35,7 @@ export class BridgeService implements OnModuleDestroy {
 
   /**
    * Cuando el módulo NestJS se destruye, cerramos los clientes gRPC.
+   * Esto libera las conexiones de red y evita fugas de recursos.
    */
   onModuleDestroy(): void {
     (this.grpc1Client as unknown as grpc.Client).close();
@@ -56,7 +59,8 @@ export class BridgeService implements OnModuleDestroy {
   }
 
   /**
-   * Recibe el payload validado desde HTTP, llama a los dos servicios gRPC y devuelve ambas respuestas.
+   * Recibe el payload validado desde HTTP, llama a los dos servicios gRPC en paralelo y devuelve ambas respuestas.
+   * Se usa Promise.all para acelerar la consulta cuando ambos servicios están disponibles.
    */
   async testConnection(payload: ConnectionRequest): Promise<{
     grpc1Response: string;
