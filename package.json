@@ -4,7 +4,9 @@
   "private": true,
   "description": "Ejemplo minimo de NestJS HTTP + 2 servicios gRPC locales",
   "scripts": {
-    "start": "ts-node src/main.ts"
+    "start": "ts-node src/main.ts",
+    "grpc1": "ts-node src/grpc1.ts",
+    "grpc2": "ts-node src/grpc2.ts"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.0",

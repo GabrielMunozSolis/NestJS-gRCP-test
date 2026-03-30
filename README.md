@@ -10,12 +10,14 @@ Este ejemplo levanta, en local:
 ## 1 Instalar y ejecutar
 
 npm install
+npm run grpc1
+npm run grpc2
 npm start
 
 ## 2 Probar en Postman
 
 - Metodo: `POST`
-- URL: `http://localhost:3000/api/test-connection`
+- URL: `http://localhost:3000/test-grpc`
 - Body: `raw` + `JSON`
 
 ```json
