@@ -3,6 +3,10 @@ import * as protoLoader from '@grpc/proto-loader';
 import { join } from 'path';
 import { ConnectionReply, ConnectionRequest } from './app.config';
 
+/**
+ * Servidor gRPC independiente para el servicio #1.
+ * Responde en el puerto 50051.
+ */
 const PROTO_PATH = join(__dirname, 'proto', 'grpc1.proto');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -21,6 +25,7 @@ server.addService(FirstGrpcService.service, {
     call: grpc.ServerUnaryCall<ConnectionRequest, ConnectionReply>,
     callback: grpc.sendUnaryData<ConnectionReply>,
   ) => {
+    // Implementación del método CheckConnection de grpc1.
     const { stringMessage, numericMessage } = call.request;
     callback(null, {
       response: `Conexión OK con gRPC1: ${stringMessage} - ${numericMessage}`,

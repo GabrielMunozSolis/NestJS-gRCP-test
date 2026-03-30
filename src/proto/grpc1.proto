@@ -2,8 +2,12 @@ syntax = "proto3";
 
 package grpc1;
 
+// Archivo proto para el servicio gRPC #1.
+// Define la interface y los mensajes que usa el servidor grpc1.
+
 // Servicio gRPC #1: responde confirmando conexion.
 service FirstGrpcService {
+  // Método CheckConnection espera un ConnectionRequest y devuelve un ConnectionReply.
   rpc CheckConnection (ConnectionRequest) returns (ConnectionReply);
 }
 
